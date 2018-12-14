@@ -20,6 +20,8 @@ import argparse
 import constants
 import json
 
+headers = {'Authorization': 'token %s' % constants.GITHUB_API_TOKEN}
+
 def get_api():
 	with open('url-list.csv', 'a') as f:
 		try:
@@ -27,13 +29,14 @@ def get_api():
 			page = 0
 			while(True):
 				page += 1
-				r = requests.get(url+str(page))
+				time.sleep(1)
+				r = requests.get(url + str(page), headers=headers)
 				if r.ok:
 					repo_items = json.loads(r.text or r.content)
 					# print(repo_items)
 					for ctr, repo_item in enumerate(repo_items):
 						print((page-1)*30+ctr+1, repo_item['archive_url'])
-						f.write(repo_item['archive_url']+"\n")
+						f.write(repo_item['archive_url'] + "\n")
 					if len(repo_items) < 30:
 						break
 				else:

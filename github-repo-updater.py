@@ -20,9 +20,12 @@ import argparse
 import constants
 import json
 
+headers = {'Authorization': 'token %s' % constants.GITHUB_API_TOKEN}
+
 def update(url):
 	try:
-		r = requests.get(url)
+		time.sleep(1)
+		r = requests.get(url, headers=headers)
 		repo_item = json.loads(r.text or r.content)
 		try:
 			if repo_item['message']=='Not Found' or repo_item['message'].find("API rate limit exceeded")>=0:
@@ -42,8 +45,6 @@ def update(url):
 
 			# pp.pprint(retj)
 			time.sleep(1)
-
-			headers = {'Authorization': 'token %s' % constants.GITHUB_API_TOKEN}
 			r2 = requests.put(url, data = json.dumps(retj), headers=headers)
 			print(url, r2)
 		else:
@@ -62,7 +63,6 @@ def main():
 			update(url)
 			cnt += 1
 			url = fp.readline().strip()
-			time.sleep(15)
 
 if __name__ == '__main__':
 	main()
