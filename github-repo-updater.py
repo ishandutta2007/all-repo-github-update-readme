@@ -47,7 +47,7 @@ def update(url):
 			if repo_item['message']=='Not Found':
 				repo_item, variant = try_variants(url)
 				if repo_item['message']=='Not Found':
-					print(url, "and none of the vaients", repo_item['message'])
+					print(url, "and NONE of the VARIENTS =====> ", repo_item['message'])
 					return
 			if repo_item['message'].find("API rate limit exceeded")>=0:
 				print(url, repo_item['message'])
