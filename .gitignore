@@ -1,4 +1,4 @@
 *.json
-*.txt
-*.bkp
+config.txt
+*.bak
 __pycache__
